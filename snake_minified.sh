@@ -18,20 +18,14 @@ echo
 done
 echo $B
 }
-random_int()
-{
-	local max="$1"
-	local line
-	local seed="$( dd if=/dev/urandom bs=2 count=1 2>&- | hexdump | if read line; then echo 0x${line#* }; fi )"
-	echo $(( ($seed % $max) + 1 ))
-}
+r(){ echo $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then echo 0x${L#* };fi) % $1)+1)); }
 drop_new_food()
 {
 	local field x y
 
 	while true; do {
-		x="$( random_int 39 )"
-		y="$( random_int 19 )"
+		x="$(r 39)"
+		y="$(r 19)"
 		field="$(g $x $y)"
 
 		[ "$field" = ' ' ] && {
