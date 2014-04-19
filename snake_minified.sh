@@ -24,7 +24,7 @@ while :
 do
 x=$(r 39)
 y=$(r 19)
-[ "$(g $x $y)" = ' ' ]&&{
+[ "$(g $x $y)" = \  ]&&{
 p $x $y :
 return 0
 }
@@ -83,7 +83,7 @@ d
 B=$(($B+1))
 else
 set -- $LIST_SNAKE
-p ${1%,*} ${1#*,} ' '
+p ${1%,*} ${1#*,} \ 
 shift
 LIST_SNAKE="$@"
 fi
