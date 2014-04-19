@@ -18,15 +18,6 @@ echo
 done
 echo $B
 }
-remove_tail()
-{
-	set -- $LIST_SNAKE
-	local x="${1%,*}"
-	local y="${1#*,}"		# 8,3 -> 8 + 3
-	p $x $y ' '
-	shift
-	LIST_SNAKE="$@"
-}
 random_int()
 {
 	local max="$1"
@@ -107,7 +98,10 @@ LIST_SNAKE="$LIST_SNAKE $X,$Y"
 			drop_new_food
 			B=$(($B+1))
 		else
-			remove_tail
+set -- $LIST_SNAKE
+p ${1%,*} ${1#*,} ' '
+shift
+LIST_SNAKE="$@"
 		fi
 	else
 		echo "you are dead"
