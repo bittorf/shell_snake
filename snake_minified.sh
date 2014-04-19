@@ -1,53 +1,44 @@
 #!/bin/sh
 p(){ eval A${1}_${2}='$3'; }
 g(){ eval echo -n "\"\${A${1}_${2}:- }\""; }
-set -e
-redraw_screen()
-{
-	local x=0
-	local y=0
-
-	echo -ne '\033[H'	# home position (0,0)
-
-	while [ $y -lt 21 ]; do {
-		y=$(( $y + 1 ))
-		while [ $x -lt 41 ]; do {
-			x=$(( x + 1 ))
-			g $x $y
-		} done
-		x=0
-		echo
-	} done
-
-	echo "Points: $BONUS"
+s(){
+x=0
+y=0
+echo -ne \\033[H
+while [ $y -lt 21 ]
+do
+y=$(($y+1))
+while [ $x -lt 41 ]
+do
+x=$((x+1))
+g $x $y
+done
+x=0
+echo
+done
+echo $B
 }
-
 add_head()
 {
 	p $X $Y O
 	LIST_SNAKE="$LIST_SNAKE $X,$Y"
 }
-
 remove_tail()
 {
 	set -- $LIST_SNAKE
 	local x="${1%,*}"
 	local y="${1#*,}"		# 8,3 -> 8 + 3
 	p $x $y ' '
-
-	# shift list and loose last element = tail
 	shift
 	LIST_SNAKE="$@"
 }
-
-random_int()		# TODO: this is not portable, but we also can't rely on $RANDOM
+random_int()
 {
 	local max="$1"
 	local line
 	local seed="$( dd if=/dev/urandom bs=2 count=1 2>&- | hexdump | if read line; then echo 0x${line#* }; fi )"
 	echo $(( ($seed % $max) + 1 ))
 }
-
 drop_new_food()
 {
 	local field x y
@@ -67,18 +58,14 @@ drop_new_food()
 loop_get_userkey()
 {
 	local key
-
 	while true; do {
 		read -s -n1 key
-
 		case "$key" in
 			a) DIRECTION='left' ;;
 			w) DIRECTION='up' ;;
 			s) DIRECTION='down' ;;
 			d) DIRECTION='right' ;;
 		esac
-
-		# TODO: dont write to file but use global var
 		echo >"LAST_KEY" "$DIRECTION"
 	} done
 }
@@ -86,7 +73,7 @@ loop_get_userkey()
 X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
-BONUS=0
+B=0
 
 for I in $(seq 2 40)
 do
@@ -102,7 +89,7 @@ done
 drop_new_food
 
 while true; do {
-	redraw_screen
+s
 
 	[ -e "LAST_KEY" ] && {
 		read DIRECTION <"LAST_KEY"
@@ -116,14 +103,13 @@ while true; do {
 		up|*)  Y=$(( $Y - 1 )) ;;
 	esac
 
-	# collision?
 	NEXT_FIELD="$(g $X $Y)"
 	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
 		add_head
 
 		if [ "$NEXT_FIELD" = : ]; then
 			drop_new_food
-			BONUS=$(( $BONUS + 1 ))
+			B=$(($B+1))
 		else
 			remove_tail
 		fi
@@ -132,5 +118,4 @@ while true; do {
 		exit 0
 	fi
 } done &
-
 loop_get_userkey
