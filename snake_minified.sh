@@ -30,20 +30,6 @@ return 0
 }
 done
 }
-loop_get_userkey()
-{
-	local key
-	while true; do {
-		read -s -n1 key
-		case "$key" in
-			a) DIRECTION='l' ;;
-			w) DIRECTION='u' ;;
-			s) DIRECTION='d' ;;
-			d) DIRECTION='r' ;;
-		esac
-		echo >L "$DIRECTION"
-	} done
-}
 X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
@@ -88,7 +74,17 @@ shift
 LIST_SNAKE="$@"
 fi
 else
-exit 0
+exit
 fi
 done &
-loop_get_userkey
+while :
+do
+read -s -n1 K
+case $K in
+a)D=l;;
+w)D=u;;
+s)D=d;;
+d)D=r;;
+esac
+echo >L $D
+done
