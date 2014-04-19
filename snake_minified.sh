@@ -19,22 +19,17 @@ done
 echo $B
 }
 r(){ echo $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then echo 0x${L#* };fi) % $1)+1)); }
-drop_new_food()
-{
-	local field x y
-
-	while true; do {
-		x="$(r 39)"
-		y="$(r 19)"
-		field="$(g $x $y)"
-
-		[ "$field" = ' ' ] && {
-			p $x $y :
-			return 0
-		}
-	} done
+d(){
+while :
+do
+x=$(r 39)
+y=$(r 19)
+[ "$(g $x $y)" = ' ' ] && {
+p $x $y :
+return 0
 }
-
+done
+}
 loop_get_userkey()
 {
 	local key
@@ -66,7 +61,7 @@ p 1 $I +
 p 41 $I +
 done
 
-drop_new_food
+d
 
 while true; do {
 s
@@ -89,7 +84,7 @@ p $X $Y O
 LIST_SNAKE="$LIST_SNAKE $X,$Y"
 
 		if [ "$NEXT_FIELD" = : ]; then
-			drop_new_food
+			d
 			B=$(($B+1))
 		else
 set -- $LIST_SNAKE
