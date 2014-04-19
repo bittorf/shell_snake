@@ -21,14 +21,14 @@ draw_border()
 {
 	local i
 
-	for i in $( seq 2 $(( $PLAYFIELD_MAX_X - 1 )) ); do {
-		array_put "$i"                '1' "—"
-		array_put "$i" "$PLAYFIELD_MAX_Y" "—"
+	for i in $( seq 2 40 )) ); do {
+		array_put $i 1 -
+		array_put $i 21 -
 	} done
 
-	for i in $( seq 2 $(( $PLAYFIELD_MAX_Y - 1 )) ); do {
-		array_put                "1" "$i" "|"
-		array_put "$PLAYFIELD_MAX_X" "$i" "|"
+	for i in $( seq 2 20 ); do {
+		array_put 1 $i +
+		array_put 41 $i +
 	} done
 }
 
@@ -39,9 +39,9 @@ redraw_screen()
 
 	echo -ne '\033[H'	# home position (0,0)
 
-	while [ $y -lt $PLAYFIELD_MAX_Y ]; do {
+	while [ $y -lt 21 ]; do {
 		y=$(( $y + 1 ))
-		while [ $x -lt $PLAYFIELD_MAX_X ]; do {
+		while [ $x -lt 41 ]; do {
 			x=$(( x + 1 ))
 			array_get "$x" "$y"
 		} done
@@ -54,7 +54,7 @@ redraw_screen()
 
 add_head()
 {
-	array_put "$X" "$Y" "$SNAKE"
+	array_put $X $Y O
 	LIST_SNAKE="$LIST_SNAKE $X,$Y"
 }
 
@@ -83,12 +83,12 @@ drop_new_food()
 	local field x y
 
 	while true; do {
-		x="$( random_int $(( $PLAYFIELD_MAX_X - 2 )) )"
-		y="$( random_int $(( $PLAYFIELD_MAX_Y - 2 )) )"
+		x="$( random_int 39 )"
+		y="$( random_int 19 )"
 		field="$( array_get "$x" "$y" )"
 
 		[ "$field" = ' ' ] && {
-			array_put "$x" "$y" "$FOOD"
+			array_put "$x" "$y" :
 			return 0
 		}
 	} done
@@ -113,13 +113,9 @@ loop_get_userkey()
 	} done
 }
 
-PLAYFIELD_MAX_X=41
-PLAYFIELD_MAX_Y=21
 X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
-FOOD=':'
-SNAKE='O'
 BONUS=0
 
 draw_border
