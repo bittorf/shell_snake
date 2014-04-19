@@ -17,21 +17,6 @@ array_get()
 	eval echo -n "\"\${ARRAY_${x}_${y}:- }\""
 }
 
-draw_border()
-{
-	local i
-
-	for i in $( seq 2 40 ); do {
-		array_put $i 1 -
-		array_put $i 21 -
-	} done
-
-	for i in $( seq 2 20 ); do {
-		array_put 1 $i +
-		array_put 41 $i +
-	} done
-}
-
 redraw_screen()
 {
 	local x=0
@@ -117,6 +102,17 @@ X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
 BONUS=0
+
+for I in $(seq 2 40)
+do
+array_put $I 1 -
+array_put $I 21 -
+done
+for I in $(seq 2 20)
+do
+array_put 1 $I +
+array_put 41 $I +
+done
 
 draw_border
 drop_new_food
