@@ -21,7 +21,7 @@ draw_border()
 {
 	local i
 
-	for i in $( seq 2 40 )) ); do {
+	for i in $( seq 2 40 ); do {
 		array_put $i 1 -
 		array_put $i 21 -
 	} done
