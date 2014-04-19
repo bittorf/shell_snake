@@ -1,6 +1,6 @@
 #!/bin/sh
-p(){ eval A${1}_${2}='$3'; }
-g(){ eval echo -n "\"\${A${1}_${2}:- }\""; }
+p(){ eval A${1}_${2}='$3';}
+g(){ eval echo -n "\"\${A${1}_${2}:- }\"";}
 s(){
 x=0
 y=0
@@ -18,13 +18,13 @@ echo
 done
 echo $B
 }
-r(){ echo $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then echo 0x${L#* };fi) % $1)+1)); }
+r(){ echo $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then echo 0x${L#* };fi) % $1)+1));}
 d(){
 while :
 do
 x=$(r 39)
 y=$(r 19)
-[ "$(g $x $y)" = ' ' ] && {
+[ "$(g $x $y)" = ' ' ]&&{
 p $x $y :
 return 0
 }
@@ -62,7 +62,7 @@ d
 while :
 do
 s
-[ -e L ] && {
+[ -e L ]&&{
 read D <L
 rm L
 }
