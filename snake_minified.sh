@@ -72,11 +72,13 @@ l)X=$(($X-1));;
 d)Y=$(($Y+1));;
 *)Y=$(($Y-1));;
 esac
-NEXT_FIELD="$(g $X $Y)"
-if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
+N="$(g $X $Y)"
+if [ "$N" = \  -o "$N" = : ]
+then
 p $X $Y O
 LIST_SNAKE="$LIST_SNAKE $X,$Y"
-if [ "$NEXT_FIELD" = : ]; then
+if [ "$N" = : ]
+then
 d
 B=$(($B+1))
 else
