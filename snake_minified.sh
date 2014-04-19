@@ -1,10 +1,11 @@
 #!/bin/sh
+E=echo
 p(){ eval A${1}_${2}='$3';}
-g(){ eval echo -n "\"\${A${1}_${2}:- }\"";}
+g(){ eval $E -n "\"\${A${1}_${2}:- }\"";}
 s(){
 x=0
 y=0
-echo -ne \\033[H
+$E -ne \\033[H
 while [ $y -lt 21 ]
 do
 y=$(($y+1))
@@ -16,9 +17,9 @@ done
 x=0
 echo
 done
-echo $B
+$E $B
 }
-r(){ echo $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then echo 0x${L#* };fi) % $1)+1));}
+r(){ $E $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then $E 0x${L#* };fi) % $1)+1));}
 d(){
 while :
 do
@@ -86,5 +87,5 @@ a)D=l;;
 w)D=u;;
 s)D=d;;
 esac
-echo >L $D
+$E >L $D
 done
