@@ -27,13 +27,13 @@ x=$(r 39)
 y=$(r 19)
 [ "$(g $x $y)" = \  ]&&{
 p $x $y :
-return 0
+return
 }
 done
 }
 X=9
 Y=8
-L="9,9 $X,$Y"
+L=9,9\ $X,$Y
 B=0
 for I in $(seq 2 40)
 do
