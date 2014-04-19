@@ -1,7 +1,6 @@
 #!/bin/sh
 
-array_put()
-{
+p(){
 	local x="$1"
 	local y="$2"
 	local char="$3"
@@ -9,8 +8,7 @@ array_put()
 	eval ARRAY_${x}_${y}='$char'
 }
 
-array_get()
-{
+g(){
 	local x="$1"
 	local y="$2"
 
@@ -28,7 +26,7 @@ redraw_screen()
 		y=$(( $y + 1 ))
 		while [ $x -lt 41 ]; do {
 			x=$(( x + 1 ))
-			array_get "$x" "$y"
+			g $x $y
 		} done
 		x=0
 		echo
@@ -39,7 +37,7 @@ redraw_screen()
 
 add_head()
 {
-	array_put $X $Y O
+	p $X $Y O
 	LIST_SNAKE="$LIST_SNAKE $X,$Y"
 }
 
@@ -48,7 +46,7 @@ remove_tail()
 	set -- $LIST_SNAKE
 	local x="${1%,*}"
 	local y="${1#*,}"		# 8,3 -> 8 + 3
-	array_put "$x" "$y" ' '
+	p $x $y ' '
 
 	# shift list and loose last element = tail
 	shift
@@ -70,10 +68,10 @@ drop_new_food()
 	while true; do {
 		x="$( random_int 39 )"
 		y="$( random_int 19 )"
-		field="$( array_get "$x" "$y" )"
+		field="$(g $x $y)"
 
 		[ "$field" = ' ' ] && {
-			array_put "$x" "$y" :
+			p $x $y :
 			return 0
 		}
 	} done
@@ -105,13 +103,13 @@ BONUS=0
 
 for I in $(seq 2 40)
 do
-array_put $I 1 -
-array_put $I 21 -
+p $I 1 -
+p $I 21 -
 done
 for I in $(seq 2 20)
 do
-array_put 1 $I +
-array_put 41 $I +
+p 1 $I +
+p 41 $I +
 done
 
 draw_border
@@ -133,7 +131,7 @@ while true; do {
 	esac
 
 	# collision?
-	NEXT_FIELD="$( array_get "$X" "$Y" )"
+	NEXT_FIELD="$(g $X $Y)"
 	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = "$FOOD" ]; then
 		add_head
 
