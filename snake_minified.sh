@@ -18,11 +18,6 @@ echo
 done
 echo $B
 }
-add_head()
-{
-	p $X $Y O
-	LIST_SNAKE="$LIST_SNAKE $X,$Y"
-}
 remove_tail()
 {
 	set -- $LIST_SNAKE
@@ -105,7 +100,8 @@ s
 
 	NEXT_FIELD="$(g $X $Y)"
 	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
-		add_head
+p $X $Y O
+LIST_SNAKE="$LIST_SNAKE $X,$Y"
 
 		if [ "$NEXT_FIELD" = : ]; then
 			drop_new_food
