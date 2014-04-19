@@ -1,20 +1,7 @@
 #!/bin/sh
-
-p(){
-	local x="$1"
-	local y="$2"
-	local char="$3"
-
-	eval ARRAY_${x}_${y}='$char'
-}
-
-g(){
-	local x="$1"
-	local y="$2"
-
-	eval echo -n "\"\${ARRAY_${x}_${y}:- }\""
-}
-
+p(){ eval A${1}_${2}='$3'; }
+g(){ eval echo -n "\"\${A${1}_${2}:- }\""; }
+set -e
 redraw_screen()
 {
 	local x=0
@@ -112,7 +99,6 @@ p 1 $I +
 p 41 $I +
 done
 
-draw_border
 drop_new_food
 
 while true; do {
@@ -132,10 +118,10 @@ while true; do {
 
 	# collision?
 	NEXT_FIELD="$(g $X $Y)"
-	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = "$FOOD" ]; then
+	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
 		add_head
 
-		if [ "$NEXT_FIELD" = "$FOOD" ]; then
+		if [ "$NEXT_FIELD" = : ]; then
 			drop_new_food
 			BONUS=$(( $BONUS + 1 ))
 		else
