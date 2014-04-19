@@ -8,14 +8,14 @@ y=0
 $E -ne \\033[H
 while [ $y -lt 21 ]
 do
-y=$(($y+1))
+let y+=1
 while [ $x -lt 41 ]
 do
-x=$((x+1))
+let x+=1
 g $x $y
 done
 x=0
-echo
+$E
 done
 $E $B
 }
@@ -54,10 +54,10 @@ read D <L
 rm L
 }
 case $D in
-r)X=$(($X+1));;
-l)X=$(($X-1));;
-d)Y=$(($Y+1));;
-*)Y=$(($Y-1));;
+r)let X+=1;;
+l)let X-=1;;
+d)let Y+=1;;
+*)let Y-=1;;
 esac
 N="$(g $X $Y)"
 if [ "$N" = \  -o "$N" = : ]
@@ -67,7 +67,7 @@ L="$L $X,$Y"
 if [ "$N" = : ]
 then
 d
-B=$(($B+1))
+let B+=1
 else
 set -- $L
 p ${1%,*} ${1#*,} \ 
