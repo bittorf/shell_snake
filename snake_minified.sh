@@ -32,7 +32,7 @@ done
 }
 X=9
 Y=8
-LIST_SNAKE="9,9 $X,$Y"
+L="9,9 $X,$Y"
 B=0
 for I in $(seq 2 40)
 do
@@ -62,21 +62,21 @@ N="$(g $X $Y)"
 if [ "$N" = \  -o "$N" = : ]
 then
 p $X $Y O
-LIST_SNAKE="$LIST_SNAKE $X,$Y"
+L="$L $X,$Y"
 if [ "$N" = : ]
 then
 d
 B=$(($B+1))
 else
-set -- $LIST_SNAKE
+set -- $L
 p ${1%,*} ${1#*,} \ 
 shift
-LIST_SNAKE="$@"
+L="$@"
 fi
 else
 exit
 fi
-done &
+done&
 while :
 do
 read -s -n1 K
