@@ -36,20 +36,18 @@ loop_get_userkey()
 	while true; do {
 		read -s -n1 key
 		case "$key" in
-			a) DIRECTION='left' ;;
-			w) DIRECTION='up' ;;
-			s) DIRECTION='down' ;;
-			d) DIRECTION='right' ;;
+			a) DIRECTION='l' ;;
+			w) DIRECTION='u' ;;
+			s) DIRECTION='d' ;;
+			d) DIRECTION='r' ;;
 		esac
-		echo >"LAST_KEY" "$DIRECTION"
+		echo >L "$DIRECTION"
 	} done
 }
-
 X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
 B=0
-
 for I in $(seq 2 40)
 do
 p $I 1 -
@@ -60,41 +58,35 @@ do
 p 1 $I +
 p 41 $I +
 done
-
 d
-
-while true; do {
+while :
+do
 s
-
-	[ -e "LAST_KEY" ] && {
-		read DIRECTION <"LAST_KEY"
-		rm "LAST_KEY"
-	}
-
-	case "$DIRECTION" in
-		right) X=$(( $X + 1 )) ;;
-		left)  X=$(( $X - 1 )) ;;
-		down)  Y=$(( $Y + 1 )) ;;
-		up|*)  Y=$(( $Y - 1 )) ;;
-	esac
-
-	NEXT_FIELD="$(g $X $Y)"
-	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
+[ -e L ] && {
+read D <L
+rm L
+}
+case $D in
+r)X=$(($X+1));;
+l)X=$(($X-1));;
+d)Y=$(($Y+1));;
+*)Y=$(($Y-1));;
+esac
+NEXT_FIELD="$(g $X $Y)"
+if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = : ]; then
 p $X $Y O
 LIST_SNAKE="$LIST_SNAKE $X,$Y"
-
-		if [ "$NEXT_FIELD" = : ]; then
-			d
-			B=$(($B+1))
-		else
+if [ "$NEXT_FIELD" = : ]; then
+d
+B=$(($B+1))
+else
 set -- $LIST_SNAKE
 p ${1%,*} ${1#*,} ' '
 shift
 LIST_SNAKE="$@"
-		fi
-	else
-		echo "you are dead"
-		exit 0
-	fi
-} done &
+fi
+else
+exit 0
+fi
+done &
 loop_get_userkey
