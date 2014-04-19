@@ -80,11 +80,11 @@ done&
 while :
 do
 read -s -n1 K
+D=r
 case $K in
 a)D=l;;
 w)D=u;;
 s)D=d;;
-d)D=r;;
 esac
 echo >L $D
 done
