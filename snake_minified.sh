@@ -1,5 +1,8 @@
 #!/bin/sh
 E=echo
+S=$(set)
+S=${#S}
+T=1
 p(){ eval A${1}_${2}='$3';}
 g(){ eval $E -n "\"\${A${1}_${2}:- }\"";}
 s(){
@@ -19,7 +22,11 @@ $E
 done
 $E $B
 }
-r(){ $E $((($(dd if=/dev/urandom bs=2 count=1 2>&-|hexdump|if read L;then $E 0x${L#* };fi) % $1)+1));}
+r(){
+S=$(($S*$S*T))
+while [ ${#S} -gt 5 ];do S=$(($S/256));done
+$E $((($S%$1)+1))
+}
 d(){
 while :
 do
@@ -48,6 +55,7 @@ done
 d
 while :
 do
+let I+=1
 s
 [ -e L ]&&{
 read D <L
@@ -66,8 +74,9 @@ p $X $Y O
 L="$L $X,$Y"
 if [ "$N" = : ]
 then
-d
 let B+=1
+T=$(($T+$B+$I))
+d
 else
 set -- $L
 p ${1%,*} ${1#*,} \ 
