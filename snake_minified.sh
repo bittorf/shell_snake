@@ -65,9 +65,9 @@ read D<L
 rm L
 }
 case $D in
-r)let X+=1;;
-l)let X-=1;;
-d)let Y+=1;;
+d)let X+=1;;
+a)let X-=1;;
+s)let Y+=1;;
 *)let Y-=1;;
 esac
 N="$(g $X $Y)"
@@ -92,11 +92,5 @@ done&
 while :
 do
 read -sn1 K
-D=r
-case $K in
-a)D=l;;
-w)D=u;;
-s)D=d;;
-esac
-$E $D>L
+$E $K>L
 done
