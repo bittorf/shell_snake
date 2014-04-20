@@ -80,7 +80,7 @@ then
 d
 let B+=1
 else
-set -- $L
+set $L
 p ${1%,*} ${1#*,} \ 
 shift
 L="$@"
