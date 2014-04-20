@@ -61,7 +61,7 @@ do
 let I+=1
 s
 [ -e L ]&&{
-read D <L
+read D<L
 rm L
 }
 case $D in
@@ -91,12 +91,12 @@ fi
 done&
 while :
 do
-read -s -n1 K
+read -sn1 K
 D=r
 case $K in
 a)D=l;;
 w)D=u;;
 s)D=d;;
 esac
-$E >L $D
+$E $D>L
 done
