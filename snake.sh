@@ -70,12 +70,28 @@ remove_tail()
 	LIST_SNAKE="$@"
 }
 
-random_int()		# TODO: this is not portable, but we also can't rely on $RANDOM
+random_int()
 {
 	local max="$1"
-	local line
-	local seed="$( dd if=/dev/urandom bs=2 count=1 2>&- | hexdump | if read line; then echo 0x${line#* }; fi )"
-	echo $(( ($seed % $max) + 1 ))
+
+	# a portable PRNG:
+	# the initial seed is the size of our environment vars
+	# on each iteration, we add user-entropy (e.g. pressed keys/moved fields)
+
+	if [ -z "$SEED" ]; then
+		SEED=$(set)
+		SEED=${#SEED}
+		ENTROPY=1
+	else
+		SEED=$(( $SEED * $SEED * $ENTROPY ))
+	fi
+
+	# greater then $FFFF?
+	while [ ${#SEED} -gt 5 ]; do {
+		SEED=$(( $SEED / 256 ))
+	} done
+
+        echo "$(( ($SEED % $max) + 1 ))"
 }
 
 drop_new_food()
@@ -118,14 +134,19 @@ PLAYFIELD_MAX_Y=21
 X=9
 Y=8
 LIST_SNAKE="9,9 $X,$Y"
+
 FOOD=':'
 SNAKE='O'
 BONUS=0
+
+ENTROPY=1
+I=0
 
 draw_border
 drop_new_food
 
 while true; do {
+	let I+=1
 	redraw_screen
 
 	[ -e "LAST_KEY" ] && {
@@ -146,8 +167,9 @@ while true; do {
 		add_head
 
 		if [ "$NEXT_FIELD" = "$FOOD" ]; then
-			drop_new_food
 			BONUS=$(( $BONUS + 1 ))
+			ENTROPY=$(( $ENTROPY + $BONUS + $I ))
+			drop_new_food
 		else
 			remove_tail
 		fi
