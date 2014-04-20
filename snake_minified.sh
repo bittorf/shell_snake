@@ -23,8 +23,11 @@ done
 $E $B
 }
 r(){
-S=$(($S*$S*T))
-while [ ${#S} -gt 5 ];do S=$(($S/256));done
+S=$(($S*$S*($T+$B+$I)))
+while [ ${#S} -gt 5 ]
+do
+S=$(($S/256))
+done
 $E $((($S%$1)+1))
 }
 d(){
@@ -74,9 +77,8 @@ p $X $Y O
 L="$L $X,$Y"
 if [ "$N" = : ]
 then
-let B+=1
-T=$(($T+$B+$I))
 d
+let B+=1
 else
 set -- $L
 p ${1%,*} ${1#*,} \ 
