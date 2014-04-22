@@ -3,7 +3,7 @@ E=echo
 S=$(set)
 S=${#S}
 T=1
-p(){ eval A${1}_${2}='$3';}
+p(){ eval A${1}_${2}='${3:-#}';}
 g(){ eval F="\"\${A${1}_${2}:- }\"";}
 s(){
 $E -ne \\033[H
@@ -48,13 +48,13 @@ L=8,8\ $X,$Y
 B=0
 for I in $(seq 2 40)
 do
-p $I 1 -
-p $I 21 -
+p $I 1
+p $I 21
 done
 for I in $(seq 2 20)
 do
-p 1 $I +
-p 41 $I +
+p 1 $I
+p 41 $I
 done
 d
 while :
