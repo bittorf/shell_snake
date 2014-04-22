@@ -66,22 +66,17 @@ read D<L
 rm L
 }
 case $D in
-a)let X+=1;;
-d)let X-=1;;
-s)let Y-=1;;
-*)let Y+=1;;
-esac
+a)let X+=1;;d)let X-=1;;s)let Y-=1;;*)let Y+=1;;esac
 g $X $Y
-case $F in \ |:)p $X $Y O
+case $F in
+\ |:)p $X $Y O
 L="$L $X,$Y"
-case $F in :) d
-let B+=1;;
-*)set $L
+case $F in
+:)d
+let B+=1;;*)set $L
 p ${1%,*} ${1#*,} \ 
 shift
-L=$@;;
-esac;;
-*)exit;;
+L=$@;;esac;;*)exit;;
 esac
 done&
 while :
