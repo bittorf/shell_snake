@@ -72,23 +72,17 @@ s)let Y-=1;;
 *)let Y+=1;;
 esac
 g $X $Y
-if [ "$F" = \  -o "$F" = : ]
-then
-p $X $Y O
+case $F in \ |:)p $X $Y O
 L="$L $X,$Y"
-if [ "$F" = : ]
-then
-d
-let B+=1
-else
-set $L
+case $F in :) d
+let B+=1;;
+*)set $L
 p ${1%,*} ${1#*,} \ 
 shift
-L="$@"
-fi
-else
-exit
-fi
+L=$@;;
+esac;;
+*)exit;;
+esac
 done&
 while :
 do
