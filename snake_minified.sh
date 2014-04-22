@@ -4,7 +4,7 @@ S=$(set)
 S=${#S}
 T=1
 p(){ eval A${1}_${2}='$3';}
-g(){ eval $E -n "\"\${A${1}_${2}:- }\"";}
+g(){ eval F="\"\${A${1}_${2}:- }\"";}
 s(){
 x=0
 y=0
@@ -12,13 +12,15 @@ $E -ne \\033[H
 while [ $y -lt 21 ]
 do
 let y+=1
+Z=
 while [ $x -lt 41 ]
 do
 let x+=1
 g $x $y
+Z=$Z$F
 done
 x=0
-$E
+$E "$Z"
 done
 $E $B
 }
@@ -35,7 +37,8 @@ while :
 do
 x=$(r 39)
 y=$(r 19)
-[ "$(g $x $y)" = \  ]&&{
+g $x $y
+[ "$F" = \  ]&&{
 p $x $y :
 return
 }
@@ -70,12 +73,12 @@ a)let X-=1;;
 s)let Y+=1;;
 *)let Y-=1;;
 esac
-N="$(g $X $Y)"
-if [ "$N" = \  -o "$N" = : ]
+g $X $Y
+if [ "$F" = \  -o "$F" = : ]
 then
 p $X $Y O
 L="$L $X,$Y"
-if [ "$N" = : ]
+if [ "$F" = : ]
 then
 d
 let B+=1
