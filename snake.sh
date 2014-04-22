@@ -14,7 +14,8 @@ array_get()
 	local x="$1"
 	local y="$2"
 
-	eval echo -n "\"\${ARRAY_${x}_${y}:- }\""
+	# set a global var
+	eval FIELD="\"\${ARRAY_${x}_${y}:- }\""
 }
 
 draw_border()
@@ -36,17 +37,20 @@ redraw_screen()
 {
 	local x=0
 	local y=0
+	local line
 
 	echo -ne '\033[H'	# home position (0,0)
 
 	while [ $y -lt $PLAYFIELD_MAX_Y ]; do {
 		y=$(( $y + 1 ))
+		line=
 		while [ $x -lt $PLAYFIELD_MAX_X ]; do {
 			x=$(( x + 1 ))
 			array_get "$x" "$y"
+			line="${line}${FIELD}"
 		} done
 		x=0
-		echo
+		echo "$line"
 	} done
 
 	echo "Points: $BONUS"
@@ -96,14 +100,14 @@ random_int()
 
 drop_new_food()
 {
-	local field x y
+	local x y
 
 	while true; do {
 		x="$( random_int $(( $PLAYFIELD_MAX_X - 2 )) )"
 		y="$( random_int $(( $PLAYFIELD_MAX_Y - 2 )) )"
-		field="$( array_get "$x" "$y" )"
+		array_get "$x" "$y"
 
-		[ "$field" = ' ' ] && {
+		[ "$FIELD" = ' ' ] && {
 			array_put "$x" "$y" "$FOOD"
 			return 0
 		}
@@ -162,7 +166,8 @@ while true; do {
 	esac
 
 	# collision?
-	NEXT_FIELD="$( array_get "$X" "$Y" )"
+	array_get "$X" "$Y"
+	NEXT_FIELD="$FIELD"
 	if [ "$NEXT_FIELD" = ' ' -o "$NEXT_FIELD" = "$FOOD" ]; then
 		add_head
 
