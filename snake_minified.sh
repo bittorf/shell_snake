@@ -44,7 +44,7 @@ done
 }
 X=9
 Y=8
-L=9,9\ $X,$Y
+L=8,8\ $X,$Y
 B=0
 for I in $(seq 2 40)
 do
@@ -68,8 +68,8 @@ rm L
 case $D in
 a)let X+=1;;
 d)let X-=1;;
-w)let Y+=1;;
 s)let Y-=1;;
+*)let Y+=1;;
 esac
 g $X $Y
 if [ "$F" = \  -o "$F" = : ]
