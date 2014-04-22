@@ -6,20 +6,18 @@ T=1
 p(){ eval A${1}_${2}='$3';}
 g(){ eval F="\"\${A${1}_${2}:- }\"";}
 s(){
-x=0
-y=0
 $E -ne \\033[H
-while [ $y -lt 21 ]
+x=42
+y=22
+while let y-=1
 do
-let y+=1
 Z=
-while [ $x -lt 41 ]
+while let x-=1
 do
-let x+=1
 g $x $y
 Z=$Z$F
 done
-x=0
+x=42
 $E "$Z"
 done
 $E $B
@@ -68,10 +66,10 @@ read D<L
 rm L
 }
 case $D in
-d)let X+=1;;
-a)let X-=1;;
-s)let Y+=1;;
-*)let Y-=1;;
+a)let X+=1;;
+d)let X-=1;;
+w)let Y+=1;;
+s)let Y-=1;;
 esac
 g $X $Y
 if [ "$F" = \  -o "$F" = : ]
