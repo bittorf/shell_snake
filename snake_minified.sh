@@ -1,8 +1,5 @@
 #!/bin/sh
 E=echo
-S=$(set)
-S=${#S}
-T=1
 p(){ eval A${1}_${2}='${3:-#}';}
 g(){ eval F="\"\${A${1}_${2}:- }\"";}
 s(){
@@ -23,15 +20,10 @@ done
 $E $B
 }
 r(){
-S=$(($S*$S*($T+$B+$I)))
-while [ ${#S} -gt 5 ]
-do
-S=$(($S/256))
-done
-$E $((($S%$1)+1))
+$E $((1+(99*$I)%$1))
 }
 d(){
-while :
+while let I+=1
 do
 x=$(r 39)
 y=$(r 19)
@@ -45,13 +37,12 @@ done
 X=9
 Y=8
 L=8,8\ $X,$Y
-B=0
-for I in $(seq 2 40)
+for I in $(seq 1 40)
 do
 p $I 1
 p $I 21
 done
-for I in $(seq 2 20)
+for I in $(seq 1 20)
 do
 p 1 $I
 p 41 $I
