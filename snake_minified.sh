@@ -37,13 +37,11 @@ done
 X=9
 Y=8
 L=8,8\ $X,$Y
-for I in $(seq 1 40)
+I=41
+while let I-=1
 do
 p $I 1
 p $I 21
-done
-for I in $(seq 1 20)
-do
 p 1 $I
 p 41 $I
 done
