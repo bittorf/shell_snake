@@ -30,7 +30,7 @@ y=$(r 19)
 g $x $y
 [ "$F" = \  ]&&{
 p $x $y :
-return
+break
 }
 done
 }
