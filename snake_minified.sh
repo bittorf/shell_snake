@@ -36,7 +36,7 @@ done
 }
 X=9
 Y=8
-L=8,8\ $X,$Y
+L="8 8 $X $Y"
 I=41
 while let I-=1
 do
@@ -58,12 +58,12 @@ a)let X+=1;;d)let X-=1;;s)let Y-=1;;*)let Y+=1;;esac
 g $X $Y
 case $F in
 \ |:)p $X $Y O
-L="$L $X,$Y"
+L="$L $X $Y"
 case $F in
 :)d
 let B+=1;;*)set $L
-p ${1%,*} ${1#*,} \ 
-shift
+p $1 $2 \ 
+shift 2
 L=$@;;esac;;*)exit;;
 esac
 done&
