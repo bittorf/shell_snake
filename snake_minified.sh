@@ -46,9 +46,8 @@ p 1 $I
 p 41 $I
 done
 d
-while :
+while let I+=1
 do
-let I+=1
 s
 [ -e L ]&&{
 read D<L
@@ -68,8 +67,7 @@ shift
 L=$@;;esac;;*)exit;;
 esac
 done&
-while :
+while read -sn1 K
 do
-read -sn1 K
 $E $K>L
 done
