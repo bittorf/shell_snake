@@ -55,7 +55,7 @@ D
 T B+=1;;*)set $L
 p $1 $2 \ 
 shift 2
-L=$@;;esac;;*)exit;;
+L=$@;;esac;;*).;;
 esac
 D&
 while read -sn1 K
