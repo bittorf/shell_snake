@@ -1,4 +1,4 @@
-shell_snake in 668 chars
+shell_snake in 625 chars
 ========================
 
 portable posix shell snake game without bashisms, inspired by
@@ -18,7 +18,7 @@ shell-scripting is not suited for coding games 8-)
    - no external calls of programs like 'clear', 'stty' or 'tput'
    - because of that, we redraw the whole screen on every move
    - the only used builtins (aka native commands) are:
-     - echo, eval, while-loop, let, break, true, read, case, test, set, shift
+     - echo, eval, while-loop, let, break, true, read, case, test, set, shift, alias
  - there is no random number generator (PRNG), so we have to built our own
  - getting a keystroke blocks, so we have to spawn another thread
    - for getting the event in parent-task we use a tempfile (ugly!)
