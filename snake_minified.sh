@@ -2,22 +2,6 @@
 E=echo
 p(){ eval A${1}_${2}=${3:-#};}
 g(){ eval F="\${A${1}_${2}:- }";}
-s(){
-$E -ne \\033[H
-y=22
-while let y-=1
-do
-Z=
-x=42
-while let x-=1
-do
-g $x $y
-Z=$Z$F
-done
-$E "$Z"
-done
-$E $B
-}
 r(){
 $E $((1+(99*$I)%$1))
 }
@@ -47,7 +31,20 @@ done
 d
 while let I+=1
 do
-s
+$E -ne \\033[H
+y=22
+while let y-=1
+do
+Z=
+x=42
+while let x-=1
+do
+g $x $y
+Z=$Z$F
+done
+$E "$Z"
+done
+$E $B
 [ -e L ]&&{
 read D<L
 rm L
