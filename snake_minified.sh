@@ -4,17 +4,16 @@ p(){ eval A${1}_${2}=${3:-#};}
 g(){ eval F="\${A${1}_${2}:- }";}
 s(){
 $E -ne \\033[H
-x=42
 y=22
 while let y-=1
 do
 Z=
+x=42
 while let x-=1
 do
 g $x $y
 Z=$Z$F
 done
-x=42
 $E "$Z"
 done
 $E $B
