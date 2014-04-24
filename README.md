@@ -1,4 +1,4 @@
-shell_snake in 625 chars
+shell_snake in 609 chars
 ========================
 
 portable posix shell snake game without bashisms, inspired by
