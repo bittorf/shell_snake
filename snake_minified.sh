@@ -17,6 +17,7 @@ p 1 $I
 p 41 $I
 D
 p 3 3 :
+>L
 W I+=1
 J
 E -ne \\033[H
@@ -33,10 +34,7 @@ D
 E "$Z"
 D
 E $B
-[ -e L ]&&{
-read D<L
-rm L
-}
+. ./L
 case $D in
 a)T X+=1;;d)T X-=1;;s)T Y-=1;;*)T Y+=1;;esac
 g $X $Y
@@ -62,5 +60,5 @@ esac
 D&
 while read -sn1 K
 J
-E $K>L
+E D=$K>L
 D
