@@ -1,7 +1,7 @@
 #!/bin/sh
 alias J=do T=let E=echo D=done W=while\ let
-p(){ eval A${1}_${2}=${3:-#};}
-g(){ eval F="\${A${1}_${2}:- }";}
+p(){ eval A$1x$2=${3:-#};}
+g(){ eval F="\${A$1x$2:- }";}
 r(){
 E $((1+(99*$I)%$1))
 }
