@@ -2,7 +2,7 @@
 alias J=do T=let E=echo D=done W=while\ let
 p(){ eval A$1x$2=${3:-#};}
 g(){ eval F="\${A$1x$2:- }";}
-r(){ E $((1+(99*$I)%$1));}
+r(){ E $((1+(99*I)%$1));}
 X=9 Y=8 L="8 8 $X $Y" I=41
 W I-=1
 J
