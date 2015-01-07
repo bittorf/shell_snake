@@ -8,7 +8,7 @@ coded during http://2014.revision-party.net/
 
 I tried to be POSIX compliant (being as much portable as possible and
 avoid bashisms, even the random-number-generator does not need /proc).
-You can e.g. play it in your native terminal or via a SSH-session.
+You can e.g. play it (using keys WASD) in your native terminal or via a SSH-session.
 There is also an unuglyfied/readable variant.
 
 Some notes:
