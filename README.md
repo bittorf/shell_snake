@@ -29,3 +29,9 @@ shell-scripting is not suited for coding games 8-)
  - the grid is internally an array, but shell/sh does not know this:
    - we "emulated" array(x,y) via an ugly eval-call with global vars
  - and finally: we had a lot of fun!
+
+TODO for POSIX:
+- rewrite 'while let $expression' calls (i like the endcondition)
+- replace 'echo' with 'printf', e.g.: printf "\\033[H"
+- find a workaround for 'read -n'
+- better kill 2nd thread at gameend
