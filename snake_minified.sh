@@ -30,7 +30,8 @@ D
 E $B
 . ./L
 case $D in
-a)T X+=1;;d)T X-=1;;s)T Y-=1;;*)T Y+=1;;esac
+a)T X+=1;;d)T X-=1;;s)T Y-=1;;*)T Y+=1
+esac
 g $X $Y
 case $F in
 \ |:)p $X $Y O
@@ -49,7 +50,8 @@ D
 T B+=1;;*)set $L
 p $1 $2 \ 
 shift 2
-L=$@;;esac;;*).;;
+L=$@
+esac;;*).
 esac
 D&
 while read -sn1 K

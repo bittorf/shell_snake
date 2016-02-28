@@ -1,5 +1,5 @@
-shell_snake in 578 chars
-========================
+shell_snake in 574 chars (without shebang)
+==========================================
 
 portable posix shell snake game without bashisms, inspired by
 http://codegolf.stackexchange.com/questions/4480/recreate-a-snake-game-in-a-console-terminal
